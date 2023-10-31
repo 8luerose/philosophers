@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/10/30 21:22:23 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/10/31 22:12:04 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,37 @@
 # include <sys/time.h>
 # include <stdio.h>
 
-#define	SUCCESS	0
-#define	FAIL	1
+# define	SUCCESS	0
+# define	FAIL	1
 
-typedef struct s_arg
+typedef struct s_all_info
 {
 	int				philo_num;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	int				eat_num;
-	long long		start_time;
-	int				finish;
-	int				finished_eat;
+	int				must_eat_num;
+	// long		start_time;
+	// int				finish;
+	// int				finished_eat;
 	pthread_mutex_t *forks;
-	pthread_mutex_t print;
-} t_arg;
+	pthread_mutex_t mutex_for_print;
+} t_all_info;
 
 typedef struct s_philo
 {
 	int			id;
-	int			left;
-	int			right;
-	long long	last_eat_time;
-	int			eat_count;
-	t_arg		*arg;
+	int			left_fork;
+	int			right_fork;
+	int			eat_cnt;
+	long		last_eat_clock;
+	t_all_info	*p_arg;
 	pthread_t	thread_id;
 } t_philo;
 
 int	print_error(char *msg);
+int init_arg(t_all_info *arg, int ac, char **av);
+int	init_mutex(t_arg *arg);
+long get_time(void);
 
 #endif
