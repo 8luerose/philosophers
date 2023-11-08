@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:12:27 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/10/31 22:22:35 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:03:54 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int main(int ac, char **av)
 	memset(&arg, 0, sizeof(t_all_info));
 	if (init_arg(&arg, ac, av));
 		return (print_error("FAIL argument init!!"));
-	if (init_philo(&philo, &arg))
+	if (init_philo(&arg, &philo))
 		return (print_error("FAIL philo init!!"));
-	if (philosophers(&arg, philo))
+	if (philosophers_start(&arg, philo))
 		return (print_error("FAIL philosophers eat!!"));
+	//philosophers_finish(&arg, philo))
+	
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/10/31 22:34:11 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:14:25 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int philosophers(t_all_info *arg, t_philo *philo)
+int philosophers_start(t_all_info *arg, t_philo *philo)
 {
 	int i;
 	
@@ -53,4 +53,17 @@ int philosophers(t_all_info *arg, t_philo *philo)
 // 	return (NULL);
 // }
 
-void *make_thread()
+void *make_thread(void *pthread_create_param_philo)
+{
+	t_philo		*philo;
+	t_all_info	*arg;
+
+	philo = (t_philo *)pthread_create_param_philo;
+	arg = philo->p_arg;
+	id (philo->id % 2 == 1)
+		usleep(500);
+	while (!arg->finish)
+	{
+		
+	}
+}

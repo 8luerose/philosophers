@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/10/31 22:12:04 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:02:41 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ typedef struct s_philo
 	pthread_t	thread_id;
 } t_philo;
 
-int	print_error(char *msg);
-int init_arg(t_all_info *arg, int ac, char **av);
-int	init_mutex(t_arg *arg);
-long get_time(void);
+int		print_error(char *msg);
+int 	init_arg(t_all_info *arg, int ac, char **av);
+int		init_mutex(t_all_info *arg);
+long	get_time(void);
+int		init_philo(t_all_info *arg, t_philo **philo);
+int		philosophers_start(t_all_info *arg, t_philo *philo);
 
 #endif

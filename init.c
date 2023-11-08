@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/10/31 22:12:26 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:58:12 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ int init_arg(t_all_info *arg, int ac, char **av)
 		if (arg->must_eat_num <= 0)
 			return (FAIL);
 	}
-	else
-	{
-		if (arg->philo_num <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
+	if (arg->philo_num <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
 			|| arg->time_sleep <= 0)
 			return (FAIL);
-	}
 	if (init_mutex(arg))
 		return (FAIL);
 	return (SUCCESS);
@@ -39,8 +36,6 @@ int	init_mutex(t_all_info *arg)
 {
 	int	i;
 
-	if (pthread_mutex_init(&(arg->mutex_for_print), NULL))
-		return (FAIL);
 	arg->forks = malloc(arg->philo_num * sizeof(pthread_mutex_t));
 	if (!(arg->forks))
 		return (FAIL);
@@ -50,19 +45,21 @@ int	init_mutex(t_all_info *arg)
 			return (FAIL);
 		i++;
 	}
+	if (pthread_mutex_init(&(arg->mutex_for_print), NULL))
+		return (FAIL);
 	return (SUCCESS);
 }
 
-int	init_philo(t_philo **philo, t_all_info *arg)
+int	init_philo(t_all_info *arg, t_philo **philo)
 {
 	int		i;
 	t_philo	*tmp;
 
-	i = 0;
 	*philo = malloc(arg->philo_num * sizeof(t_philo));
 	if (!(philo))
 		return (FAIL);
 	tmp = *philo;
+	i = 0;
 	while (i < arg->philo_num)
 	{
 		tmp[i].id = i;
@@ -73,3 +70,5 @@ int	init_philo(t_philo **philo, t_all_info *arg)
 		tmp[i].p_arg = arg;
 	}
 }
+
+///////////////////////////////

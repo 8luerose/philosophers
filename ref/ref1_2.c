@@ -236,6 +236,35 @@ void	*ft_thread(void *argv)
 	return (0);
 }
 
+// 깃헙 코드 버전
+// void	*ph_thread(void *argv)
+// {
+// 	t_arg		*arg;
+// 	t_philo		*philo;
+
+// 	philo = argv;
+// 	arg = philo->arg;
+// 	if (philo->id % 2 == 0)
+// 		sleep_until_even_eat(arg);
+// 	while (!arg->finish)
+// 	{
+// 		if (arg->philo_num - 1 == philo->id && philo->eat_count == 0)
+// 			usleep(1);
+// 		ph_action(arg, philo);
+// 		if (arg->philo_num == 1)
+// 			spend_time((long long)arg->time_to_sleep, arg);
+// 		if (arg->eat_times == philo->eat_count)
+// 		{
+// 			arg->finished_eat++;
+// 			break ;
+// 		}
+// 		ph_stat_printf(arg, philo->id, "is sleeping");
+// 		spend_time((long long)arg->time_to_sleep, arg);
+// 		ph_stat_printf(arg, philo->id, "is thinking");
+// 	}
+// 	return (0);
+// }
+
 int	ft_philo_start(t_arg *arg, t_philo *philo)
 {
 	int		i;
