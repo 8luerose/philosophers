@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/10 19:07:42 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:10:18 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void *make_thread(void *pthread_create_info_philo_i)
 
 	philo = (t_philo *)pthread_create_info_philo_i;
 	arg = philo->p_arg;
-	id (philo->id % 2 == 1)
+	if (philo->id % 2 == 1)
 		usleep(2000);
 	while (!arg->finish_flag)
 	{
@@ -68,7 +68,30 @@ void *make_thread(void *pthread_create_info_philo_i)
 		if (philo_must_eat_check(arg, philo));
 			break ;
 		message_print(arg, philo->id, "is sleeping");
-		start_to_pass_time
+		if (!arg->finish_flag)
+		{
+			until_the_timeout(arg, arg->time_sleep);
+			message_print(arg, philo->id, "is thinking");
+		}
+	}
+}
+
+int	philo_pick_up_fork(t_all_info *arg, t_philo *philo)
+{
+	pthread_mutex_t	philo_leftfork_id;
+	pthread_mutex_t	philo_rightfork_id;
+
+	philo_leftfork_id = arg->forks[philo->left_fork];
+	philo_rightfork_id = arg->forks[philo->right_fork];
+	pthread_mutext_lock(&(philo_leftfork_id));
+	message_print(arg, philo->id, "has taken a fork");
+	if (arg->philo != 1)
+	{
 
 	}
+}
+
+int message_print(t_all_info *arg, int philo_id, char *msg)
+{
+	
 }
