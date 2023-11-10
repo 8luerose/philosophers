@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/08 20:02:41 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:01:04 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 
 typedef struct s_all_info
 {
-	int				philo_num;
+	int				philo;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	int				must_eat_num;
+	int				must_eat_cnt;
 	// long		start_time;
-	// int				finish;
+	int				finish_flag;
 	// int				finished_eat;
 	pthread_mutex_t *forks;
 	pthread_mutex_t mutex_for_print;
@@ -52,6 +52,7 @@ int 	init_arg(t_all_info *arg, int ac, char **av);
 int		init_mutex(t_all_info *arg);
 long	get_time(void);
 int		init_philo(t_all_info *arg, t_philo **philo);
-int		philosophers_start(t_all_info *arg, t_philo *philo);
+int 	main_thread_start(t_all_info *arg, t_philo *philo);
+void	*make_thread(void *pthread_create_param_philo_i);
 
 #endif
