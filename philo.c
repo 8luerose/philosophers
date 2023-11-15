@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/15 22:31:21 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:56:38 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,11 @@ int	philo_pick_up_fork(t_all_info *arg, t_philo *philo)
 		message_print(arg, philo->id, "is eating");
 		philo->last_eat_clock = get_time();
 		philo->eat_cnt++;
-		pass_time()
-
-
+		pass_time((long)arg->time_eat, arg);
+		pthread_mutex_unlock(&(philo_rightfork_id));
 		pthread_mutex_unlock(&(philo_leftfork_id));
-		message_print(arg, philo->id, )
 	}
+	return (0);
 
 }
 
