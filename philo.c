@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/10 22:10:18 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:31:21 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void *make_thread(void *pthread_create_info_philo_i)
 		message_print(arg, philo->id, "is sleeping");
 		if (!arg->finish_flag)
 		{
-			until_the_timeout(arg, arg->time_sleep);
+			until_to_timeout(arg, arg->time_sleep);
 			message_print(arg, philo->id, "is thinking");
 		}
 	}
@@ -81,14 +81,32 @@ int	philo_pick_up_fork(t_all_info *arg, t_philo *philo)
 	pthread_mutex_t	philo_leftfork_id;
 	pthread_mutex_t	philo_rightfork_id;
 
-	philo_leftfork_id = arg->forks[philo->left_fork];
-	philo_rightfork_id = arg->forks[philo->right_fork];
-	pthread_mutext_lock(&(philo_leftfork_id));
-	message_print(arg, philo->id, "has taken a fork");
-	if (arg->philo != 1)
+	if (arg->philo == 1)
 	{
-
+		philo_leftfork_id = arg->forks[philo->left_fork];
+		pthread_mutex_lock(&(philo_leftfork_id));
+		message_print(arg, philo->id, "has taken a fork");
+		arg->finish_flag = 1;
+		pthread_mutex_unlock(&(philo_leftfork_id));
 	}
+	else
+	{
+		philo_leftfork_id = arg->forks[philo->left_fork];
+		philo_rightfork_id = arg->forks[philo->right_fork];
+		pthread_mutex_lock(&(philo_leftfork_id));
+		message_print(arg, philo->id, "has taken a fork");
+		pthread_mutex_lock(&(philo_rightfork_id));
+		message_print(arg, philo->id, "has taken a fork");
+		message_print(arg, philo->id, "is eating");
+		philo->last_eat_clock = get_time();
+		philo->eat_cnt++;
+		pass_time()
+
+
+		pthread_mutex_unlock(&(philo_leftfork_id));
+		message_print(arg, philo->id, )
+	}
+
 }
 
 int message_print(t_all_info *arg, int philo_id, char *msg)

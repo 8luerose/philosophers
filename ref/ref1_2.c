@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+
 typedef struct s_arg
 {
 	int philo_num;
@@ -30,6 +31,7 @@ typedef struct s_philo
 	t_arg *arg;
 } t_philo;
 
+void	ft_philo_check_finish(t_arg *arg, t_philo *philo);
 
 long long ft_get_time(void)
 {
@@ -67,33 +69,6 @@ void ft_free_thread(t_arg *arg, t_philo *philo)
 
 
 
-int	main(int argc, char *argv[])
-{
-	t_arg	arg;
-	t_philo	*philo;
-	int		errno;
-
-	if (argc != 5 && argc != 6)
-		return (print_error("error argc", 3));
-// argc는 무조건 5개 아니면 6개이므로 에러 처리
-
-	memset(&arg, 0, sizeof(t_arg));
-	errno = ft_arg_init(&arg, argc, argv);
-	if (errno)
-		return (print_error("error arg init", errno));
-// argv를 구조체에 저장하고 필요한 변수들을 할당하고 초기화해준다
-	
-	errno = ft_philo_init(&philo, &arg);
-	if (errno)
-		return (print_error("error philo init", errno));
-// 철학자별로 들어갈 변수들을 초기화한다.
-
-	errno = ft_philo_start(&arg, philo);
-	if (errno)
-		return (print_error("error philo start", errno));
-// 철학자를 시작하고 종료될때까지 동작한다
-	return (0);
-}
 
 int	ft_arg_init_mutex(t_arg *arg)
 {
@@ -117,10 +92,10 @@ int	ft_arg_init_mutex(t_arg *arg)
 
 int	ft_arg_init(t_arg *arg, int argc, char *argv[])
 {
-	arg->philo_num = ft_atoi(argv[1]);
-	arg->time_to_die = ft_atoi(argv[2]);
-	arg->time_to_eat = ft_atoi(argv[3]);
-	arg->time_to_sleep = ft_atoi(argv[4]);
+	arg->philo_num = atoi(argv[1]);
+	arg->time_to_die = atoi(argv[2]);
+	arg->time_to_eat = atoi(argv[3]);
+	arg->time_to_sleep = atoi(argv[4]);
 	arg->start_time = ft_get_time();
 	if (arg->philo_num <= 0 || arg->time_to_die < 0 || arg->time_to_eat < 0
 		|| arg->time_to_sleep < 0)
@@ -129,7 +104,7 @@ int	ft_arg_init(t_arg *arg, int argc, char *argv[])
 	}
 	if (argc == 6)
 	{
-		arg->eat_times = ft_atoi(argv[5]);
+		arg->eat_times = atoi(argv[5]);
 		if (arg->eat_times <= 0)
 			return (6);
 	}
@@ -226,6 +201,7 @@ void	*ft_thread(void *argv)
 		ft_philo_action(arg, philo);
 		if (arg->eat_times == philo->eat_count)
 		{
+			printf("eat_count : %d %d\n", philo->eat_count, arg->eat_times);
 			arg->finished_eat++;
 			break ;
 		}
@@ -311,4 +287,32 @@ void	ft_philo_check_finish(t_arg *arg, t_philo *philo)
 			i++;
 		}
 	}
+}
+
+int	main(int argc, char *argv[])
+{
+	t_arg	arg;
+	t_philo	*philo;
+	int		errno;
+
+	if (argc != 5 && argc != 6)
+		return (print_error("error argc", 3));
+// argc는 무조건 5개 아니면 6개이므로 에러 처리
+
+	memset(&arg, 0, sizeof(t_arg));
+	errno = ft_arg_init(&arg, argc, argv);
+	if (errno)
+		return (print_error("error arg init", errno));
+// argv를 구조체에 저장하고 필요한 변수들을 할당하고 초기화해준다
+	
+	errno = ft_philo_init(&philo, &arg);
+	if (errno)
+		return (print_error("error philo init", errno));
+// 철학자별로 들어갈 변수들을 초기화한다.
+
+	errno = ft_philo_start(&arg, philo);
+	if (errno)
+		return (print_error("error philo start", errno));
+// 철학자를 시작하고 종료될때까지 동작한다
+	return (0);
 }
