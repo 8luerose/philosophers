@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/10 19:00:58 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:35:14 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int init_arg(t_all_info *arg, int ac, char **av)
 	arg->time_die = ft_atoi(av[2]);
 	arg->time_eat = ft_atoi(av[3]);
 	arg->time_sleep = ft_atoi(av[4]);
+	arg->init_time = get_time();
 	if (ac == 6)
 	{
 		arg->must_eat_cnt = ft_atoi(av[5]);
@@ -66,11 +67,11 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 		tmp[i].left_fork = i;
 		tmp[i].right_fork = (i + 1) % arg->philo;
 		tmp[i].eat_cnt = 0;
-		tmp[i].last_eat_clock = 0;							//get_time()써야 할수도
+		tmp[i].last_eat_time = 0;							//get_time()써야 할수도
 		tmp[i].p_arg = arg;
-		i++
+		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 ///////////////////////////////
