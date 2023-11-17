@@ -6,11 +6,42 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 16:59:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:01:18 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+// int main_thread_start(t_all_info *arg, t_philo *philo)
+// {
+// 	int i;
+	
+// 	i = 0;
+// 	while (i < arg->philo)
+// 	{
+// 		philo[i].last_eat_time = get_time();
+// 		if (pthread_create(&(philo[i].thread_id), NULL, make_thread, &(philo[i])))
+// 			return (FAIL);
+// 		i++;
+// 	}
+// 	always_on_monitoring(arg, philo);
+// 	i = 0;
+// 	while (i < arg->philo)
+// 	{
+// 		pthread_join(philo[i].thread_id, NULL);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	pthread_mutex_destory(&(arg->mutex_for_print));
+// 	while (i < arg->philo)
+// 	{
+// 		if (arg->forks_init_status[i])
+//             pthread_mutex_destroy(&(arg->forks[i]));
+//         i++;
+// 	}
+// 	free(arg->forks);
+// 	free(philo);
+// }
 
 int main_thread_start(t_all_info *arg, t_philo *philo)
 {
@@ -25,22 +56,39 @@ int main_thread_start(t_all_info *arg, t_philo *philo)
 		i++;
 	}
 	always_on_monitoring(arg, philo);
+}
+
+int wait_thread_exit(t_all_info *arg, t_philo **philo)
+{
+	int i;
+
 	i = 0;
 	while (i < arg->philo)
 	{
-		pthread_join(philo[i].thread_id, NULL);
+		if (pthread_join((*philo)[i].thread_id, NULL))
+			return (FAIL);
 		i++;
 	}
+	return (SUCCESS);
+}
+
+int	destory_mutex(t_all_info *arg)
+{
+	int i;
+
 	i = 0;
-	pthread_mutex_destory(&(arg->mutex_for_print));
+	if (pthread_mutex_destory(&(arg->mutex_for_print)))
+		return (FAIL);
 	while (i < arg->philo)
 	{
 		if (arg->forks_init_status[i])
-            pthread_mutex_destroy(&(arg->forks[i]));
-        i++;
+		{
+			if (pthread_mutex_destroy(&(arg->forks[i])))
+				return (FAIL);
+		}
+		i++;
 	}
-	free(arg->forks);
-	free(philo);
+	return (SUCCESS);
 }
 
 // void *make_thread(void *arg)
