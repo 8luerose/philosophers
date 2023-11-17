@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/16 17:35:14 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:13:50 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int init_arg(t_all_info *arg, int ac, char **av)
 {
 	arg->philo = ft_atoi(av[1]);
-	arg->time_die = ft_atoi(av[2]);
-	arg->time_eat = ft_atoi(av[3]);
-	arg->time_sleep = ft_atoi(av[4]);
+	arg->time_to_die = ft_atoi(av[2]);
+	arg->time_to_eat = ft_atoi(av[3]);
+	arg->time_to_sleep = ft_atoi(av[4]);
 	arg->init_time = get_time();
 	if (ac == 6)
 	{
@@ -25,8 +25,8 @@ int init_arg(t_all_info *arg, int ac, char **av)
 		if (arg->must_eat_cnt <= 0)
 			return (FAIL);
 	}
-	if (arg->philo <= 0 || arg->time_die <= 0 || arg->time_eat <= 0
-			|| arg->time_sleep <= 0)
+	if (arg->philo <= 0 || arg->time_to_die <= 0 || arg->time_to_eat <= 0
+			|| arg->time_to_sleep <= 0)
 			return (FAIL);
 	if (init_mutex(arg))
 		return (FAIL);
@@ -38,14 +38,17 @@ int	init_mutex(t_all_info *arg)
 	int	i;
 
 	arg->forks = malloc(arg->philo * sizeof(pthread_mutex_t));
-	if (!(arg->forks))
-		return (FAIL);
+	arg->forks_init_status = malloc(arg->philo * sizeof(int)); // 배열 할당
+	if (!(arg->forks) || !(arg->forks_init_status))
+        return (FAIL);
 	while (i < arg->philo)
-	{
-		if (pthread_mutex_init(&(arg->forks[i]), NULL))
-			return (FAIL);
-		i++;
-	}
+    {
+        if (pthread_mutex_init(&(arg->forks[i]), NULL))
+            arg->forks_init_status[i] = 1; // 초기화 성공
+        else
+            arg->forks_init_status[i] = 0; // 초기화 실패
+        i++;
+    }
 	if (pthread_mutex_init(&(arg->mutex_for_print), NULL))
 		return (FAIL);
 	return (SUCCESS);
@@ -73,5 +76,3 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 	}
 	return (SUCCESS);
 }
-
-///////////////////////////////

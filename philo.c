@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/16 17:41:55 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:59:52 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ int main_thread_start(t_all_info *arg, t_philo *philo)
 		pthread_join(philo[i].thread_id, NULL);
 		i++;
 	}
+	i = 0;
+	pthread_mutex_destory(&(arg->mutex_for_print));
+	while (i < arg->philo)
+	{
+		if (arg->forks_init_status[i])
+            pthread_mutex_destroy(&(arg->forks[i]));
+        i++;
+	}
+	free(arg->forks);
+	free(philo);
 }
 
 // void *make_thread(void *arg)
@@ -68,15 +78,15 @@ void *make_thread(void *pthread_create_info_philo_i)
 	philo = (t_philo *)pthread_create_info_philo_i;
 	arg = philo->p_arg;
 	if (philo->id % 2 == 1)
-		usleep(2000);
+		usleep(500);
 	while (!arg->finish_flag)
 	{
 		philo_pick_up_fork(arg, philo);
 		if ((philo_must_eat_check(arg, philo)) == SUCCESS);
 			break ;
-		message_print(arg, philo->id, "is sleeping");
 		if (!arg->finish_flag)
 		{
+			message_print(arg, philo->id, "is sleeping");
 			go_until_to_time((long long)arg->time_to_sleep, arg);
 			message_print(arg, philo->id, "is thinking");
 		}
@@ -131,33 +141,75 @@ void message_print(t_all_info *arg, int philo_id, char *msg)
 	current_time = get_time();
 	pthread_mutex_lock(&(arg->mutex_for_print));
 	if (!(arg->finish_flag))
-		printf("%lld %d %s \n", current_time - arg->init_time);
+		printf("%lld %d %s \n", current_time - arg->init_time, philo_id + 1, msg);
 	pthread_mutex_unlock(&(arg->mutex_for_print));
 }
 
+// void	always_on_monitoring(t_all_info *arg, t_philo *philo)
+// {
+// 	int			i;
+// 	long long	current_time;
+
+// 	while (!arg->finish_flag)
+// 	{
+// 		if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
+// 		{
+// 			arg->finish_flag = 1;
+// 			break ;
+// 		}
+// 		i = 0;
+// 		while (i < arg->philo)
+// 		{
+// 			current_time = get_time();
+// 			if ((current_time - philo[i].last_eat_time) >= arg->time_to_die)
+// 			{
+// 				message_print(arg, i, "died");
+// 				arg->finish_flag = 1;
+// 				break ;
+// 			}
+// 			i++;
+// 		}
+// 	}
+// }
+
 void	always_on_monitoring(t_all_info *arg, t_philo *philo)
+{
+	while (!arg->finish_flag)
+	{
+		if (must_eat_check(&(arg)) == SUCCESS)
+			break ;
+		if (time_to_die_check(&(arg), philo) == SUCCESS)
+			break ;
+	}
+}
+
+int	must_eat_check(t_all_info **arg)
+{
+	if (((*arg)->must_eat_cnt > 0) && ((*arg)->philo == (*arg)->total_eat))
+	{
+		(*arg)->finish_flag = 1;
+		return (SUCCESS);
+	}
+	else
+		return (FAIL);
+}
+
+int	time_to_die_check(t_all_info **arg, t_philo *philo)
 {
 	int			i;
 	long long	current_time;
 
-	while (!arg->finish_flag)
+	i = 0;
+	while (i < (*arg)->philo)
 	{
-		if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
+		current_time = get_time();
+		if ((current_time - (philo)[i].last_eat_time) >= (*arg)->time_to_die)
 		{
-			arg->finish_flag = 1;
-			break ;
+			message_print((*arg), i, "died");
+			(*arg)->finish_flag = 1;
+			return (SUCCESS);
 		}
-		i = 0;
-		while (i < arg->philo)
-		{
-			current_time = get_time();
-			if ((current_time - philo[i].last_eat_time) >= arg->time_to_die)
-			{
-				message_print(arg, i, "died");
-				arg->finish_flag = 1;
-				break ;
-			}
-			i++;
-		}
+		i++;
 	}
+	return (FAIL);
 }

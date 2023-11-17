@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/16 17:36:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:56:36 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_all_info
 	long long		init_time;
 	int				finish_flag;
 	int				total_eat;
+	int				*forks_init_status;		// 뮤텍스 초기화 상태 추적을 위한 배열
 	pthread_mutex_t *forks;
 	pthread_mutex_t mutex_for_print;
 } t_all_info;
