@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:21:32 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/16 17:25:53 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:47:16 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,4 @@ void	go_until_to_time(long long arg_timeout, t_all_info *arg)
 			break ;
 		usleep(10);
 	}
-};
+}

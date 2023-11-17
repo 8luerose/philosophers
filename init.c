@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 16:13:50 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:57:13 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_mutex(t_all_info *arg)
 	arg->forks_init_status = malloc(arg->philo * sizeof(int)); // 배열 할당
 	if (!(arg->forks) || !(arg->forks_init_status))
         return (FAIL);
+	i = 0;
 	while (i < arg->philo)
     {
         if (pthread_mutex_init(&(arg->forks[i]), NULL))
@@ -60,7 +61,7 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 	t_philo	*tmp;
 
 	*philo = malloc(arg->philo * sizeof(t_philo));
-	if (!(philo))
+	if (!(*philo))
 		return (FAIL);
 	tmp = *philo;
 	i = 0;
@@ -70,7 +71,7 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 		tmp[i].left_fork = i;
 		tmp[i].right_fork = (i + 1) % arg->philo;
 		tmp[i].eat_cnt = 0;
-		tmp[i].last_eat_time = 0;							//get_time()써야 할수도
+		tmp[i].last_eat_time = get_time();							//get_time()써야 할수도
 		tmp[i].p_arg = arg;
 		i++;
 	}

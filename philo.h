@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 15:56:36 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:51:56 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,25 @@ typedef struct s_philo
 	pthread_t	thread_id;
 } t_philo;
 
+int	ft_atoi(const char *str);
+
 int			print_error(char *msg);
+long long	get_time(void);
+void		go_until_to_time(long long arg_timeout, t_all_info *arg);
+
 int 		init_arg(t_all_info *arg, int ac, char **av);
 int			init_mutex(t_all_info *arg);
-long long	get_time(void);
 int			init_philo(t_all_info *arg, t_philo **philo);
+
 int 		main_thread_start(t_all_info *arg, t_philo *philo);
-void		*make_thread(void *pthread_create_param_philo_i);
+int 		wait_thread_exit(t_all_info *arg, t_philo **philo);
+int			destroy_mutex(t_all_info *arg);
+void 		*make_thread(void *pthread_create_info_philo_i);
+void		philo_pick_up_fork(t_all_info *arg, t_philo *philo);
+int			philo_must_eat_check(t_all_info *arg, t_philo *philo);
+void 		message_print(t_all_info *arg, int philo_id, char *msg);
+void		always_on_monitoring(t_all_info *arg, t_philo *philo);
+int			must_eat_check(t_all_info *arg);
+int			time_to_die_check(t_all_info *arg, t_philo *philo);
 
 #endif
