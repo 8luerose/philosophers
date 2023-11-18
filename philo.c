@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 21:14:15 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/18 21:02:02 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	destroy_mutex(t_all_info *arg)
 // 	return (NULL);
 // }
 
-void *make_thread(void *pthread_create_info_philo_i)
+void	*make_thread(void *pthread_create_info_philo_i)
 {
 	t_philo		*philo;
 	t_all_info	*arg;
@@ -149,35 +149,59 @@ void *make_thread(void *pthread_create_info_philo_i)
 	return (NULL);
 }
 
-void	philo_pick_up_fork(t_all_info *arg, t_philo *philo)
-{
-	pthread_mutex_t	philo_leftfork_id;
-	pthread_mutex_t	philo_rightfork_id;
+// void	philo_pick_up_fork(t_all_info *arg, t_philo *philo)
+// {
+// 	pthread_mutex_t	philo_leftfork_id;
+// 	pthread_mutex_t	philo_rightfork_id;
 
-	if (arg->philo == 1)
+// 	if (arg->philo == 1)
+//     {
+// 		// philo_leftfork_id = arg->forks[philo->left_fork];
+// 		// pthread_mutex_lock(&(philo_leftfork_id));
+//         message_print(arg, philo->id, "has taken a fork");
+// 		go_until_to_time((long long)arg->time_to_die, arg);
+//         message_print(arg, philo->id, "died");
+//         arg->finish_flag = 1;
+//     }
+// 	else
+// 	{
+// 		philo_leftfork_id = arg->forks[philo->left_fork];
+// 		pthread_mutex_lock(&(philo_leftfork_id));
+// 		message_print(arg, philo->id, "has taken a fork");
+// 		philo_rightfork_id = arg->forks[philo->right_fork];
+// 		pthread_mutex_lock(&(philo_rightfork_id));
+// 		message_print(arg, philo->id, "has taken a fork");
+// 		message_print(arg, philo->id, "is eating");
+// 		philo->last_eat_time  = get_time();
+// 		philo->eat_cnt++;
+// 		go_until_to_time((long long)arg->time_to_eat, arg);
+// 		pthread_mutex_unlock(&(philo_rightfork_id));
+// 		pthread_mutex_unlock(&(philo_leftfork_id));
+// 	}
+// }
+
+void philo_pick_up_fork(t_all_info *arg, t_philo *philo)
+{
+    if (arg->philo == 1)
     {
-		// philo_leftfork_id = arg->forks[philo->left_fork];
-		// pthread_mutex_lock(&(philo_leftfork_id));
         message_print(arg, philo->id, "has taken a fork");
-		go_until_to_time((long long)arg->time_to_die, arg);
+        go_until_to_time((long long)arg->time_to_die, arg);
         message_print(arg, philo->id, "died");
         arg->finish_flag = 1;
     }
-	else
-	{
-		philo_leftfork_id = arg->forks[philo->left_fork];
-		philo_rightfork_id = arg->forks[philo->right_fork];
-		pthread_mutex_lock(&(philo_leftfork_id));
-		message_print(arg, philo->id, "has taken a fork");
-		pthread_mutex_lock(&(philo_rightfork_id));
-		message_print(arg, philo->id, "has taken a fork");
-		message_print(arg, philo->id, "is eating");
-		philo->last_eat_time  = get_time();
-		philo->eat_cnt++;
-		go_until_to_time((long long)arg->time_to_eat, arg);
-		pthread_mutex_unlock(&(philo_rightfork_id));
-		pthread_mutex_unlock(&(philo_leftfork_id));
-	}
+    else
+    {
+        pthread_mutex_lock(&(arg->forks[philo->left_fork]));
+        message_print(arg, philo->id, "has taken a fork");
+        pthread_mutex_lock(&(arg->forks[philo->right_fork]));
+        message_print(arg, philo->id, "has taken a fork");
+        message_print(arg, philo->id, "is eating");
+        philo->last_eat_time = get_time();
+        philo->eat_cnt++;
+        go_until_to_time((long long)arg->time_to_eat, arg);
+        pthread_mutex_unlock(&(arg->forks[philo->right_fork]));
+        pthread_mutex_unlock(&(arg->forks[philo->left_fork]));
+    }
 }
 
 int	philo_must_eat_check(t_all_info *arg, t_philo *philo)
@@ -230,7 +254,10 @@ void message_print(t_all_info *arg, int philo_id, char *msg)
 
 
 ////////////////////////////////////////////////////////
-////합친 코드/////
+
+
+////1차 합친 코드/////
+
 // void	always_on_monitoring(t_all_info *arg, t_philo *philo)
 // {
 // 	int i;
@@ -258,6 +285,39 @@ void message_print(t_all_info *arg, int philo_id, char *msg)
 // 		}
 // 	}
 // }
+
+////2차 합친 코드/////
+
+// void always_on_monitoring(t_all_info *arg, t_philo *philo)
+// {
+//     int i;
+//     long long current_time;
+
+//     while (!arg->finish_flag)
+//     {
+//         if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
+//         {
+//             arg->finish_flag = 1;
+//             break;
+//         }
+
+//         i = 0;
+//         while (i < arg->philo)
+//         {
+//             current_time = get_time();
+//             if ((current_time - philo[i].last_eat_time) >= arg->time_to_die)
+//             {
+//                 message_print(arg, i, "died");
+//                 arg->finish_flag = 1;
+//                 break;
+//             }
+//             i++;
+//         }
+//     }
+// }
+
+
+//3차 합친 코드
 void always_on_monitoring(t_all_info *arg, t_philo *philo)
 {
     int i;
@@ -286,8 +346,64 @@ void always_on_monitoring(t_all_info *arg, t_philo *philo)
     }
 }
 
-
 //////////////////////원래코드/////////////////
+// void	always_on_monitoring(t_all_info *arg, t_philo *philo)
+// {
+// 	while (!arg->finish_flag)
+// 	{
+// 		if (must_eat_check((arg)) == SUCCESS)
+// 			break ;
+// 		if (time_to_die_check((arg), philo) == SUCCESS)
+// 			break ;
+// 	}
+// }
+
+//2차
+// void	always_on_monitoring(t_all_info *arg, t_philo *philo)
+// {
+// 	int	i;
+
+// 	while (!arg->finish_flag)
+// 	{
+// 		if (must_eat_check((arg)) == SUCCESS)
+// 			break ;
+// 		i = 0;
+// 		while (i < arg->philo)
+// 		{
+// 			if (time_to_die_check((arg), philo, i) == SUCCESS)
+// 				break ;
+// 			i++;
+// 		}
+// 	}
+// }
+
+// int must_eat_check(t_all_info *arg)
+// {
+//     if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
+//     {
+//         arg->finish_flag = 1;
+//     	return (SUCCESS);
+// 	}
+// 	else
+// 		return (FAIL);
+// }
+
+// int time_to_die_check(t_all_info *arg, t_philo *philo, int i)
+// {
+//     long long current_time;
+
+// 	current_time = get_time();
+// 	if ((current_time - philo[i].last_eat_time) >= arg->time_to_die)
+// 	{
+// 		message_print(arg, i, "died");
+// 		arg->finish_flag = 1;
+// 		return (SUCCESS);
+// 	}
+//     return (FAIL);
+// }
+
+
+//원본 코드 백업
 // void	always_on_monitoring(t_all_info *arg, t_philo *philo)
 // {
 // 	while (!arg->finish_flag)

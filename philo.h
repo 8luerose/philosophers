@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 19:51:56 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/18 19:51:36 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int			philo_must_eat_check(t_all_info *arg, t_philo *philo);
 void 		message_print(t_all_info *arg, int philo_id, char *msg);
 void		always_on_monitoring(t_all_info *arg, t_philo *philo);
 int			must_eat_check(t_all_info *arg);
-int			time_to_die_check(t_all_info *arg, t_philo *philo);
+int			time_to_die_check(t_all_info *arg, t_philo *philo, int i);
 
 #endif
