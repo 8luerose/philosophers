@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/18 19:51:36 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:00:16 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int			init_philo(t_all_info *arg, t_philo **philo);
 int 		main_thread_start(t_all_info *arg, t_philo *philo);
 int 		wait_thread_exit(t_all_info *arg, t_philo **philo);
 int			destroy_mutex(t_all_info *arg);
-void 		*make_thread(void *pthread_create_info_philo_i);
-void		philo_pick_up_fork(t_all_info *arg, t_philo *philo);
+void		*make_thread(void *pthread_create_info_philo_idx);
+void		 philo_pick_up_fork(t_all_info *arg, t_philo *philo_idx);
 int			philo_must_eat_check(t_all_info *arg, t_philo *philo);
 void 		message_print(t_all_info *arg, int philo_id, char *msg);
 void		always_on_monitoring(t_all_info *arg, t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/18 21:02:02 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:02:57 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,32 +119,32 @@ int	destroy_mutex(t_all_info *arg)
 // 	return (NULL);
 // }
 
-void	*make_thread(void *pthread_create_info_philo_i)
+void	*make_thread(void *pthread_create_info_philo_idx)
 {
-	t_philo		*philo;
+	t_philo		*philo_idx;
 	t_all_info	*arg;
 
-	philo = (t_philo *)pthread_create_info_philo_i;
-	arg = philo->p_arg;
-	if (philo->id % 2 == 1)
+	philo_idx = (t_philo *)pthread_create_info_philo_idx;
+	arg = philo_idx->p_arg;
+	if (philo_idx->id % 2 == 1)
 		usleep(1000);
-	// if (philo->id % 2 == 0)
+	// if (philo_idx->id % 2 == 0)
 	// 	usleep(1000);
 	while (!arg->finish_flag)
 	{
-		philo_pick_up_fork(arg, philo);
-		if ((philo_must_eat_check(arg, philo)) == SUCCESS)
+		philo_pick_up_fork(arg, philo_idx);
+		if ((philo_must_eat_check(arg, philo_idx)) == SUCCESS)
 			break ;
 		// if (!arg->finish_flag)
 		// {
-		// 	message_print(arg, philo->id, "is sleeping");
+		// 	message_print(arg, philo_idx->id, "is sleeping");
 		// 	go_until_to_time((long long)arg->time_to_sleep, arg);
-		// 	message_print(arg, philo->id, "is thinking");
+		// 	message_print(arg, philo_idx->id, "is thinking");
 		// }
 	
-		message_print(arg, philo->id, "is sleeping");
+		message_print(arg, philo_idx->id, "is sleeping");
 		go_until_to_time((long long)arg->time_to_sleep, arg);
-		message_print(arg, philo->id, "is thinking");
+		message_print(arg, philo_idx->id, "is thinking");
 	}
 	return (NULL);
 }
@@ -180,27 +180,27 @@ void	*make_thread(void *pthread_create_info_philo_i)
 // 	}
 // }
 
-void philo_pick_up_fork(t_all_info *arg, t_philo *philo)
+void philo_pick_up_fork(t_all_info *arg, t_philo *philo_idx)
 {
     if (arg->philo == 1)
     {
-        message_print(arg, philo->id, "has taken a fork");
+        message_print(arg, philo_idx->id, "has taken a fork");
         go_until_to_time((long long)arg->time_to_die, arg);
-        message_print(arg, philo->id, "died");
+        message_print(arg, philo_idx->id, "died");
         arg->finish_flag = 1;
     }
     else
     {
-        pthread_mutex_lock(&(arg->forks[philo->left_fork]));
-        message_print(arg, philo->id, "has taken a fork");
-        pthread_mutex_lock(&(arg->forks[philo->right_fork]));
-        message_print(arg, philo->id, "has taken a fork");
-        message_print(arg, philo->id, "is eating");
-        philo->last_eat_time = get_time();
-        philo->eat_cnt++;
+        pthread_mutex_lock(&(arg->forks[philo_idx->left_fork]));
+        message_print(arg, philo_idx->id, "has taken a fork");
+        pthread_mutex_lock(&(arg->forks[philo_idx->right_fork]));
+        message_print(arg, philo_idx->id, "has taken a fork");
+        message_print(arg, philo_idx->id, "is eating");
+        philo_idx->last_eat_time = get_time();
+        philo_idx->eat_cnt++;
         go_until_to_time((long long)arg->time_to_eat, arg);
-        pthread_mutex_unlock(&(arg->forks[philo->right_fork]));
-        pthread_mutex_unlock(&(arg->forks[philo->left_fork]));
+        pthread_mutex_unlock(&(arg->forks[philo_idx->right_fork]));
+        pthread_mutex_unlock(&(arg->forks[philo_idx->left_fork]));
     }
 }
 
