@@ -1,41 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 19:14:28 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/21 19:20:34 by taehkwon         ###   ########.fr       */
+/*   Created: 2023/11/21 18:59:37 by taehkwon          #+#    #+#             */
+/*   Updated: 2023/11/21 19:11:46 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+int	end_waiting_thread(t_all_info *arg, t_philo **philo)
 {
-	long long	i;
-	int			minus;
-	long long	num;
+	int	i;
 
 	i = 0;
-	minus = 1;
-	num = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '+')
-		i++;
-	else if (str[i] == '-')
+	while (i < arg->philo)
 	{
-		minus *= -1;
+		if (pthread_join((*philo)[i].thread_id, NULL))
+			return (FAIL);
 		i++;
 	}
-	while ((str[i] >= 48 && str[i] <= 57) && str[i])
+	return (SUCCESS);
+}
+
+int	destroy_mutex(t_all_info *arg)
+{
+	int	i;
+
+	i = 0;
+	if (pthread_mutex_destroy(&(arg->mutex_for_print)))
+		return (FAIL);
+	while (i < arg->philo)
 	{
-		num *= 10;
-		num += (str[i] - '0');
+		if (arg->forks_init_status[i])
+		{
+			if (pthread_mutex_destroy(&(arg->forks[i])))
+				return (FAIL);
+		}
 		i++;
 	}
-	num *= minus;
-	return (num);
+	return (SUCCESS);
 }

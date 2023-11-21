@@ -6,13 +6,13 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:12:27 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 17:23:20 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:21:22 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_all_info	arg;
 	t_philo		*philo;
@@ -26,7 +26,7 @@ int main(int ac, char **av)
 		return (print_error("FAIL philo init!!"));
 	if (main_thread_start(&arg, philo) == FAIL)
 		return (print_error("FAIL philosophers eat!!"));
-	if (wait_thread_exit(&arg, &philo) == FAIL)
+	if (end_waiting_thread(&arg, &philo) == FAIL)
 		return (print_error("FAIL wait thread exit!!"));
 	if (destroy_mutex(&arg) == FAIL)
 		return (print_error("FAIL destroy mutex!!"));

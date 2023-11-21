@@ -6,13 +6,13 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/17 19:57:13 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:21:16 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_arg(t_all_info *arg, int ac, char **av)
+int	init_arg(t_all_info *arg, int ac, char **av)
 {
 	arg->philo = ft_atoi(av[1]);
 	arg->time_to_die = ft_atoi(av[2]);
@@ -26,8 +26,8 @@ int init_arg(t_all_info *arg, int ac, char **av)
 			return (FAIL);
 	}
 	if (arg->philo <= 0 || arg->time_to_die <= 0 || arg->time_to_eat <= 0
-			|| arg->time_to_sleep <= 0)
-			return (FAIL);
+		|| arg->time_to_sleep <= 0)
+		return (FAIL);
 	if (init_mutex(arg))
 		return (FAIL);
 	return (SUCCESS);
@@ -38,18 +38,18 @@ int	init_mutex(t_all_info *arg)
 	int	i;
 
 	arg->forks = malloc(arg->philo * sizeof(pthread_mutex_t));
-	arg->forks_init_status = malloc(arg->philo * sizeof(int)); // 배열 할당
+	arg->forks_init_status = malloc(arg->philo * sizeof(int));
 	if (!(arg->forks) || !(arg->forks_init_status))
-        return (FAIL);
+		return (FAIL);
 	i = 0;
 	while (i < arg->philo)
-    {
-        if (pthread_mutex_init(&(arg->forks[i]), NULL))
-            arg->forks_init_status[i] = 1; // 초기화 성공
-        else
-            arg->forks_init_status[i] = 0; // 초기화 실패
-        i++;
-    }
+	{
+		if (pthread_mutex_init(&(arg->forks[i]), NULL))
+			arg->forks_init_status[i] = 0;
+		else
+			arg->forks_init_status[i] = 1;
+		i++;
+	}
 	if (pthread_mutex_init(&(arg->mutex_for_print), NULL))
 		return (FAIL);
 	return (SUCCESS);
@@ -71,7 +71,7 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 		tmp[i].left_fork = i;
 		tmp[i].right_fork = (i + 1) % arg->philo;
 		tmp[i].eat_cnt = 0;
-		tmp[i].last_eat_time = get_time();							//get_time()써야 할수도
+		tmp[i].last_eat_time = get_time();
 		tmp[i].p_arg = arg;
 		i++;
 	}
