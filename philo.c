@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/20 22:22:57 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:50:41 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,36 +255,6 @@ void message_print(t_all_info *arg, int philo_id, char *msg)
 
 ////////////////////////////////////////////////////////
 
-
-////1차 합친 코드/////
-
-// void	always_on_monitoring(t_all_info *arg, t_philo *philo)
-// {
-// 	int i;
-//     long long current_time;
-	
-// 	while (!arg->finish_flag)
-// 	{
-// 		if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
-// 		{
-// 			arg->finish_flag = 1;
-// 			break;
-// 		}
-
-// 		i = 0;
-// 		while (i < arg->philo)
-// 		{
-// 			current_time = get_time();
-// 			if ((current_time - philo[i].last_eat_time) >= arg->time_to_die)
-// 			{
-// 				message_print(arg, i, "died");
-// 				arg->finish_flag = 1;
-// 				break;
-// 			}
-// 			i++;
-// 		}
-// 	}
-// }
 
 ////2차 합친 코드/////
 
