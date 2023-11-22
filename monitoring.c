@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:03:31 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 20:48:14 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 21:16:39 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int	time_to_die_check(t_all_info *arg, t_philo *philo, int i)
 	long long	now_time;
 
 	now_time = get_time();
-	// pthread_mutex_lock(&(philo[i].mutex_for_eat_time));
+	pthread_mutex_lock(&(philo[i].mutex_for_eat_time));
 	if ((now_time - philo[i].last_eat_time) >= arg->time_to_die)
 	{
-		// pthread_mutex_unlock(&(philo[i].mutex_for_eat_time));
 		message_print(arg, i, "died");
 		arg->finish_flag = 1;
+		pthread_mutex_unlock(&(philo[i].mutex_for_eat_time));
 		return (SUCCESS);
 	}
 	return (FAIL);
