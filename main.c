@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:12:27 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 19:46:05 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:34:02 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	leaks_check(void)
 
 int	main(int ac, char **av)
 {
-	atexit(leaks_check);
+	// atexit(leaks_check);
 	t_all_info	arg;
 	t_philo		*philo;
 

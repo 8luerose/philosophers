@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/21 19:21:16 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:02 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	init_philo(t_all_info *arg, t_philo **philo)
 		tmp[i].eat_cnt = 0;
 		tmp[i].last_eat_time = get_time();
 		tmp[i].p_arg = arg;
+		pthread_mutex_init(&(tmp[i].mutex_for_eat_time), NULL);
 		i++;
 	}
 	return (SUCCESS);
