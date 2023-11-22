@@ -5,13 +5,13 @@ INCLUDES = -I.
 RM = rm -f
 NAME = philo
 
-SRCS = cleaning.c               \
+SRCS = main.c                   \
        ft_atoi.c                \
+       utils.c					\
        init.c                   \
-       main.c                   \
-       monitoring.c             \
        philo.c                  \
-       utils.c
+       monitoring.c             \
+	   cleaning.c               \
 
 OBJS = $(SRCS:.c=.o)
 
