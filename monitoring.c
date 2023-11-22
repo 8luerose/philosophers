@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:03:31 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 21:16:39 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:58:04 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	always_on_monitoring(t_all_info *arg, t_philo *philo)
 
 	while (!arg->finish_flag)
 	{
+		printf("check*** 1\n\n");
 		if (must_eat_check((arg)) == SUCCESS)
 			break ;
 		i = 0;
@@ -49,9 +50,12 @@ int	time_to_die_check(t_all_info *arg, t_philo *philo, int i)
 	pthread_mutex_lock(&(philo[i].mutex_for_eat_time));
 	if ((now_time - philo[i].last_eat_time) >= arg->time_to_die)
 	{
+		printf("check!!! 1\n\n");
 		message_print(arg, i, "died");
-		arg->finish_flag = 1;
+		printf("check!!! 3\n\n");
+		printf("check!!! arg->finish_flag = %d\n", arg->finish_flag);
 		pthread_mutex_unlock(&(philo[i].mutex_for_eat_time));
+		arg->finish_flag = 1;
 		return (SUCCESS);
 	}
 	return (FAIL);
