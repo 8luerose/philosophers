@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:12:27 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/21 19:42:25 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:55:30 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	main(int ac, char **av)
 		return (print_error("FAIL wait thread exit!!"));
 	if (destroy_mutex(&arg) == FAIL)
 		return (print_error("FAIL destroy mutex!!"));
-	free(arg.forks_init_status);
-	free(arg.forks);
-	free(philo);
+	free_all(&arg, &philo);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:59:37 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/21 19:11:46 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:56:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ int	destroy_mutex(t_all_info *arg)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+void	free_all(t_all_info *arg, t_philo **philo)
+{
+	free(arg->forks_init_status);
+	free(arg->forks);
+	free(*philo);
 }
