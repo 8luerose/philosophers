@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/21 19:10:14 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:17:23 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*mk_thread(void *pthread_create_info_philo_idx)
 	philo_idx = (t_philo *)pthread_create_info_philo_idx;
 	arg = philo_idx->p_arg;
 	if (philo_idx->id % 2 == 1)
-		usleep(1000);
+		usleep(200);
 	while (!arg->finish_flag)
 	{
 		philo_pick_up_fork(arg, philo_idx);
