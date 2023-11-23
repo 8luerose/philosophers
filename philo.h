@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 22:55:32 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:49 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ typedef struct s_all_info
 
 typedef struct s_philo
 {
-	int				id;
-	int				left_fork;
-	int				right_fork;
-	int				eat_cnt;
-	long long		last_eat_time;
-	t_all_info		*p_arg;
-	pthread_t		thread_id;
+	int			id;
+	int			left_fork;
+	int			right_fork;
+	int			eat_cnt;
+	long long	last_eat_time;
+	t_all_info	*p_arg;
+	pthread_t	thread_id;
 	pthread_mutex_t	mutex_for_eat_time;
 }	t_philo;
 
