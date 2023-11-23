@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 20:48:10 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:12:21 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void	philo_pick_up_fork(t_all_info *arg, t_philo *philo_idx)
 		pthread_mutex_lock(&(arg->forks[philo_idx->right_fork]));
 		message_print(arg, philo_idx->id, "has taken a fork");
 		message_print(arg, philo_idx->id, "is eating");
-		// pthread_mutex_lock(&(philo_idx->mutex_for_eat_time));
-		philo_idx->last_eat_time = get_time(); //data race
-		// pthread_mutex_unlock(&(philo_idx->mutex_for_eat_time));
+		philo_idx->last_eat_time = get_time();
 		philo_idx->eat_cnt++;
 		go_until_to_time((long long)arg->time_to_eat, arg);
 		pthread_mutex_unlock(&(arg->forks[philo_idx->right_fork]));
