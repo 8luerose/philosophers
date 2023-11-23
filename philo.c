@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 22:57:06 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:57:59 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ void	*mk_thread(void *pthread_create_info_philo_idx)
 		usleep(200);
 	while (!arg->finish_flag)
 	{
-		printf("check### 1\n\n");
+		printf("check### 1, finish_flag: %d\n\n", arg->finish_flag);
 		philo_pick_up_fork(arg, philo_idx);
-		printf("check### 2-1\n\n");
+		printf("check### 2-1, finish_flag: %d\n\n", arg->finish_flag);
 		if ((philo_must_eat_check(arg, philo_idx)) == SUCCESS)
 		{
-			printf("check### 2-2\n\n");
+			printf("check### 2-2, finish_flag: %d\n\n", arg->finish_flag);
 			break ;
 		}
-		printf("check### 3\n\n");
+		printf("check### 3, finish_flag: %d\n\n", arg->finish_flag);
 		message_print(arg, philo_idx->id, "is sleeping");
 		go_until_to_time((long long)arg->time_to_sleep, arg);
 		message_print(arg, philo_idx->id, "is thinking");
 	}
-	printf("check### 2-3\n\n");
+	printf("check### 2-3, finish_flag: %d\n\n", arg->finish_flag);
 	return (NULL);
 }
 
