@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:12:27 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/23 21:13:59 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:45:35 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 		return (print_error("FAIL philosophers eat!!"));
 	if (end_waiting_thread(&arg, &philo) == FAIL)
 		return (print_error("FAIL wait thread exit!!"));
-	if (destroy_mutex(&arg) == FAIL)
+	if (destroy_mutex(&arg, philo) == FAIL)
 		return (print_error("FAIL destroy mutex!!"));
 	free_all(&arg, &philo);
 	return (0);

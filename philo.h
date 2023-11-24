@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/23 21:12:52 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:27:55 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_all_info
 	int				*forks_init_status;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_for_print;
+	pthread_mutex_t mutex_for_finish; // 추가된 뮤텍스
+	pthread_mutex_t	mutex_for_total_eat; // 추가된 뮤텍스
 }	t_all_info;
 
 typedef struct s_philo
@@ -58,9 +60,10 @@ int			init_arg(t_all_info *arg, int ac, char **av);
 int			init_mutex(t_all_info *arg);
 int			init_philo(t_all_info *arg, t_philo **philo);
 
-int			main_thread_start(t_all_info *arg, t_philo *philo);
 int			end_waiting_thread(t_all_info *arg, t_philo **philo);
-int			destroy_mutex(t_all_info *arg);
+int			destroy_mutex(t_all_info *arg, t_philo *philo);
+
+int			main_thread_start(t_all_info *arg, t_philo *philo);
 void		*mk_thread(void *pthread_create_info_philo_idx);
 void		philo_pick_up_fork(t_all_info *arg, t_philo *philo_idx);
 int			philo_must_eat_check(t_all_info *arg, t_philo *philo);

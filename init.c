@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:35:10 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/22 20:43:02 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:27:44 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int	init_mutex(t_all_info *arg)
 		i++;
 	}
 	if (pthread_mutex_init(&(arg->mutex_for_print), NULL))
+		return (FAIL);
+	if (pthread_mutex_init(&(arg->mutex_for_finish), NULL)) // 추가된 뮤텍스 초기화
+        return (FAIL);
+	if (pthread_mutex_init(&(arg->mutex_for_total_eat), NULL))
 		return (FAIL);
 	return (SUCCESS);
 }
