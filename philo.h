@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 21:00:16 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/24 18:27:55 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/25 19:32:47 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_all_info
 	int				*forks_init_status;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_for_print;
-	pthread_mutex_t mutex_for_finish; // 추가된 뮤텍스
-	pthread_mutex_t	mutex_for_total_eat; // 추가된 뮤텍스
+	pthread_mutex_t	mutex_for_finish;
+	pthread_mutex_t	mutex_for_total_eat;
 }	t_all_info;
 
 typedef struct s_philo
