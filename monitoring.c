@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:03:31 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/24 18:15:07 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/25 19:27:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,33 @@ void	always_on_monitoring(t_all_info *arg, t_philo *philo)
 // 	}
 // }
 
-int	must_eat_check(t_all_info *arg)
+int must_eat_check(t_all_info *arg)
 {
-	if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
-	{
-		arg->finish_flag = 1;
-		return (SUCCESS);
-	}
-	else
-		return (FAIL);
+    int total_eat;
+
+    pthread_mutex_lock(&(arg->mutex_for_total_eat));
+    total_eat = arg->total_eat;
+    pthread_mutex_unlock(&(arg->mutex_for_total_eat));
+
+    if ((arg->must_eat_cnt > 0) && (arg->philo == total_eat))
+    {
+        arg->finish_flag = 1;
+        return (SUCCESS);
+    }
+    else
+        return (FAIL);
 }
+
+// int	must_eat_check(t_all_info *arg)
+// {
+// 	if ((arg->must_eat_cnt > 0) && (arg->philo == arg->total_eat))
+// 	{
+// 		arg->finish_flag = 1;
+// 		return (SUCCESS);
+// 	}
+// 	else
+// 		return (FAIL);
+// }
 
 int time_to_die_check(t_all_info *arg, t_philo *philo, int i)
 {
