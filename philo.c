@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/28 21:28:24 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/28 21:35:09 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,28 +95,17 @@ int	philo_must_eat_check(t_all_info *arg, t_philo *philo)
 	return (FAIL);
 }
 
-// void	message_print(t_all_info *arg, int philo_id, char *msg)
-// {
-// 	long long	now_time;
-
-// 	now_time = get_time();
-// 	pthread_mutex_lock(&(arg->mutex_for_print));
-// 	if (!(arg->finish_flag))
-// 		printf("%lld %d %s \n", now_time - arg->init_time, philo_id + 1, msg);
-// 	pthread_mutex_unlock(&(arg->mutex_for_print));
-// }
-
 void	message_print(t_all_info *arg, int philo_id, char *msg)
 {
 	long long	now_time;
-	int			finish;
+	// int			finish;
 
 	now_time = get_time();
-	pthread_mutex_lock(&(arg->mutex_for_finish));
-	finish = arg->finish_flag;
-	pthread_mutex_unlock(&(arg->mutex_for_finish));
+	// pthread_mutex_lock(&(arg->mutex_for_finish));
+	// finish = arg->finish_flag;
+	// pthread_mutex_unlock(&(arg->mutex_for_finish));
 	pthread_mutex_lock(&(arg->mutex_for_print));
-	if (!finish)
+	if (!arg->finish_flag)
 		printf("%lld %d %s \n", now_time - arg->init_time, philo_id + 1, msg);
 	pthread_mutex_unlock(&(arg->mutex_for_print));
 }
