@@ -6,7 +6,7 @@
 /*   By: taehkwon <taehkwon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 22:18:58 by taehkwon          #+#    #+#             */
-/*   Updated: 2023/11/28 21:36:46 by taehkwon         ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:11 by taehkwon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void	message_print(t_all_info *arg, int philo_id, char *msg)
 {
 	long long	now_time;
 
-	now_time = get_time();
 	pthread_mutex_lock(&(arg->mutex_for_print));
+	now_time = get_time();
 	if (!arg->finish_flag)
 		printf("%lld %d %s \n", now_time - arg->init_time, philo_id + 1, msg);
 	pthread_mutex_unlock(&(arg->mutex_for_print));
